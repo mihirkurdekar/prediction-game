@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { User } from '../models/user';
 import { LoginService } from './login.service';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,7 @@ import { LoginService } from './login.service';
 })
 export class LoginComponent implements OnInit {
 
+  msgs: Message[] = [];
   user: User;
   constructor(private messageService: MessageService, private loginService: LoginService) {
     this.user = <User>{};

@@ -4,7 +4,7 @@ import { MatchService } from './match.service';
 import { MatchResponse } from '../models/match-response';
 import { Match } from '../models/match';
 import { Bet } from '../models/bet';
-import { SelectItem } from 'primeng/api';
+import { SelectItem, Message } from 'primeng/api';
 import { BetService } from './bet.service';
 import { LoginService } from '../login/login.service';
 import { MessageService } from 'primeng/components/common/messageservice';
@@ -24,6 +24,7 @@ export class MatchesComponent implements OnInit {
   results: SelectItem[];
   selectedResult: string;
   selectedGroup: string;
+  msgs: Message[] = [];
 
   constructor(
     private matchService: MatchService,

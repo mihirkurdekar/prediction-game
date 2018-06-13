@@ -12,6 +12,7 @@ import { RegisterService } from './register.service';
 })
 export class RegisterComponent implements OnInit {
 
+  msgs: Message[] = [];
   user: User;
   confirmPassword: string;
 
