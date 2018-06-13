@@ -7,6 +7,10 @@ import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { GrowlModule } from 'primeng/growl';
 import { HttpClientModule } from '@angular/common/http';
+import {CarouselModule} from 'primeng/carousel';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {SelectButtonModule} from 'primeng/selectbutton';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -17,6 +21,8 @@ import { FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { MatchesComponent } from './matches/matches.component';
 import { LoginService } from './login/login.service';
+import {DialogModule} from 'primeng/dialog';
+
 
 
 @NgModule({
@@ -37,7 +43,12 @@ import { LoginService } from './login/login.service';
     FormsModule,
     GrowlModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    CarouselModule,
+    RadioButtonModule,
+    DialogModule,
+    SelectButtonModule,
+    ProgressSpinnerModule
   ],
   providers: [
     MessageService,
