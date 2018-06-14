@@ -3,6 +3,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import { User } from '../models/user';
 import { LoginService } from './login.service';
 import { Message } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,11 @@ export class LoginComponent implements OnInit {
 
   msgs: Message[] = [];
   user: User;
-  constructor(private messageService: MessageService, private loginService: LoginService) {
+  constructor(
+    private messageService: MessageService,
+     private loginService: LoginService,
+     private router: Router
+    ) {
     this.user = <User>{};
   }
 
@@ -27,6 +32,7 @@ export class LoginComponent implements OnInit {
         if (result.result) {
           this.loginService.username = this.user.username;
           this.addGrowl('success', 'Login Success', '');
+          this.router.navigate(['/matches']);
         } else {
           this.addGrowl('warn', 'Login Failed', 'incorrect username or password');
         }

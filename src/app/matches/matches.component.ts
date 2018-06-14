@@ -25,6 +25,8 @@ export class MatchesComponent implements OnInit {
   selectedResult: string;
   selectedGroup: string;
   msgs: Message[] = [];
+  now = new Date();
+  todayDate = new Date().setHours(0, 0, 0, 0);
 
   constructor(
     private matchService: MatchService,
@@ -36,6 +38,7 @@ export class MatchesComponent implements OnInit {
       { label: 'Draw', value: 'D' },
       { label: 'Loose', value: 'L', icon: 'pi pi-times' }
     ];
+    console.log(this.now);
   }
 
   ngOnInit() {
@@ -43,6 +46,9 @@ export class MatchesComponent implements OnInit {
       (response) => {
         this.matchResponse = response;
         this.isLoaded = true;
+        console.log(this.matchResponse.groups.a.matches[1].date);
+        console.log(this.matchResponse.groups.a.matches[1].date >= this.now);
+        console.log(new Date(this.matchResponse.groups.a.matches[1].date) >= this.now);
       },
       (error) => {
         console.log(error);
@@ -86,6 +92,14 @@ export class MatchesComponent implements OnInit {
 
   addGrowl(severity: string, summary: string, detail: string) {
     this.messageService.add({ severity: severity, summary: summary, detail: detail });
+  }
+
+  checkDate(date: Date): boolean {
+    return new Date(date) >= this.now;
+  }
+
+  checkToday(date: string): boolean {
+    return new Date(date).setHours(0, 0, 0, 0) === this.todayDate;
   }
 
 }

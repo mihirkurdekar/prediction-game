@@ -14,7 +14,7 @@ export class AuthGuardService implements CanActivate {
     if (this.loginService.username && this.loginService.username.length > 0) {
       return true;
     } else {
-      this.router.navigate(['/login'], {
+      this.router.navigate(['/'], {
         queryParams: {
           return: state.url
         }

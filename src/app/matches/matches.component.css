@@ -2,3 +2,11 @@
     text-align: center;
     /* width: 100%; */
 }
+
+.today{
+    background-color: #77e27d;
+}
+
+.matchday{
+    background-color: #ece09b;;
+}

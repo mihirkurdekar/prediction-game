@@ -3,10 +3,11 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { MatchesComponent } from './matches/matches.component';
 import { AuthGuardService } from './auth-guard.service';
+import { RulesComponent } from './rules/rules.component';
 
 export const appRoutes: Routes = [
     {
-        path: 'login',
+        path: '',
         component: LoginComponent
     },
     {
@@ -16,6 +17,11 @@ export const appRoutes: Routes = [
     {
         path: 'matches',
         component: MatchesComponent,
+        canActivate: [AuthGuardService]
+    },
+    {
+        path: 'rules',
+        component: RulesComponent,
         canActivate: [AuthGuardService]
     }
 ];
