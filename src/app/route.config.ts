@@ -4,6 +4,9 @@ import { RegisterComponent } from './register/register.component';
 import { MatchesComponent } from './matches/matches.component';
 import { AuthGuardService } from './auth-guard.service';
 import { RulesComponent } from './rules/rules.component';
+import { AdminComponent } from './admin/admin.component';
+import { AdminGuardService } from './admin-guard.service';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 
 export const appRoutes: Routes = [
     {
@@ -23,5 +26,15 @@ export const appRoutes: Routes = [
         path: 'rules',
         component: RulesComponent,
         canActivate: [AuthGuardService]
-    }
+    },
+    {
+        path: 'admin',
+        component: AdminComponent,
+        canActivate: [AdminGuardService]
+    },
+    {
+        path: 'leaderboard',
+        component: LeaderboardComponent,
+        canActivate: [AuthGuardService]
+    },
 ];

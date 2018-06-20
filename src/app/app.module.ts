@@ -12,6 +12,7 @@ import {RadioButtonModule} from 'primeng/radiobutton';
 import {SelectButtonModule} from 'primeng/selectbutton';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {CardModule} from 'primeng/card';
+import {TableModule} from 'primeng/table';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -24,6 +25,8 @@ import { MatchesComponent } from './matches/matches.component';
 import { LoginService } from './login/login.service';
 import {DialogModule} from 'primeng/dialog';
 import { RulesComponent } from './rules/rules.component';
+import { AdminComponent } from './admin/admin.component';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 
 
 
@@ -35,6 +38,8 @@ import { RulesComponent } from './rules/rules.component';
     HeaderComponent,
     MatchesComponent,
     RulesComponent,
+    AdminComponent,
+    LeaderboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +57,8 @@ import { RulesComponent } from './rules/rules.component';
     DialogModule,
     SelectButtonModule,
     ProgressSpinnerModule,
-    CardModule
+    CardModule,
+    TableModule
   ],
   providers: [
     MessageService,
