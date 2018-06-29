@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
         if (result.result) {
           this.loginService.username = this.user.username;
           this.addGrowl('success', 'Login Success', '');
-          this.router.navigate(['/matches']);
+          this.router.navigate(['/knockout']);
         } else {
           this.addGrowl('warn', 'Login Failed', 'incorrect username or password');
         }

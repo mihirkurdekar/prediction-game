@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-
 import { MatchService } from '../match.service';
 import { MatchResponse } from '../models/match-response';
-import { Match } from '../models/match';
-import { Bet } from '../models/bet';
-import { SelectItem, Message } from 'primeng/api';
 import { BetService } from '../bet.service';
+import { Match } from '../models/match';
+import { SelectItem, Message } from 'primeng/api';
 import { LoginService } from '../login/login.service';
 import { MessageService } from 'primeng/components/common/messageservice';
+import { Bet } from '../models/bet';
 
 @Component({
-  selector: 'app-matches',
-  templateUrl: './matches.component.html',
-  styleUrls: ['./matches.component.css'],
-  providers: [MatchService, BetService]
+  selector: 'app-knockout',
+  templateUrl: './knockout.component.html',
+  styleUrls: ['./knockout.component.css'],
+  providers: [MatchService,BetService]
 })
-export class MatchesComponent implements OnInit {
+export class KnockoutComponent implements OnInit {
 
   matchResponse: MatchResponse;
   isLoaded = false;
@@ -27,28 +26,22 @@ export class MatchesComponent implements OnInit {
   msgs: Message[] = [];
   now = new Date();
   todayDate = new Date().setHours(0, 0, 0, 0);
-
-  constructor(
-    private matchService: MatchService,
+  constructor(private matchService: MatchService,
     private betService: BetService,
     private loginService: LoginService,
-    private messageService: MessageService) {
+    private messageService: MessageService) { }
+
+  ngOnInit() {
     this.results = [
       { label: 'Win', value: 'W', icon: 'pi pi-check' },
       { label: 'Draw', value: 'D' },
       { label: 'Loose', value: 'L', icon: 'pi pi-times' }
     ];
-    console.log(this.now);
-  }
-
-  ngOnInit() {
     this.matchService.getMatches().subscribe(
       (response) => {
         this.matchResponse = response;
-        this.isLoaded = true;
         console.log(this.matchResponse.groups.a.matches[1].date);
-        console.log(this.matchResponse.groups.a.matches[1].date >= this.now);
-        console.log(new Date(this.matchResponse.groups.a.matches[1].date) >= this.now);
+        this.isLoaded = true;
       },
       (error) => {
         console.log(error);
@@ -56,6 +49,7 @@ export class MatchesComponent implements OnInit {
     );
   }
 
+  
   selectMatch(match: Match, groupname: string) {
     this.selectedMatch = match;
     this.selectedGroup = groupname;
@@ -65,7 +59,7 @@ export class MatchesComponent implements OnInit {
   submitBet() {
     if (this.selectedResult && this.selectedResult.length > 0) {
       const bet: Bet = <Bet>{};
-      bet.matchId = this.selectedGroup + this.selectedMatch.home_team + this.selectedMatch.away_team;
+      bet.matchId = this.selectedGroup + '_' + this.selectedMatch.home_team + '_' + this.selectedMatch.away_team;
       bet.bet = this.selectedResult;
       bet.username = this.loginService.username;
       console.log(bet);

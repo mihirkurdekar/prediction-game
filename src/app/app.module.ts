@@ -27,6 +27,7 @@ import {DialogModule} from 'primeng/dialog';
 import { RulesComponent } from './rules/rules.component';
 import { AdminComponent } from './admin/admin.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+import { KnockoutComponent } from './knockout/knockout.component';
 
 
 
@@ -40,6 +41,7 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
     RulesComponent,
     AdminComponent,
     LeaderboardComponent,
+    KnockoutComponent,
   ],
   imports: [
     BrowserModule,

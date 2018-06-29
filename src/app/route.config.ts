@@ -7,6 +7,7 @@ import { RulesComponent } from './rules/rules.component';
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuardService } from './admin-guard.service';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+import { KnockoutComponent } from './knockout/knockout.component';
 
 export const appRoutes: Routes = [
     {
@@ -37,4 +38,9 @@ export const appRoutes: Routes = [
         component: LeaderboardComponent,
         canActivate: [AuthGuardService]
     },
+    {
+        path: 'knockout',
+        component: KnockoutComponent,
+        canActivate: [AuthGuardService]
+    }
 ];

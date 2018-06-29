@@ -11,7 +11,7 @@ export class AdminGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-    if (this.loginService.username && this.loginService.username.length > 0 && this.loginService.username === 'm') {
+    if (this.loginService.username && this.loginService.username.length > 0 && this.loginService.username === 'mTest') {
       return true;
     } else {
       this.router.navigate(['/'], {

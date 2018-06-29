@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Bet } from '../models/bet';
+import { Bet } from './models/bet';
 import { Observable } from 'rxjs';
-import { ApiResult } from '../models/result';
+import { ApiResult } from './models/result';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment.prod';
+import { environment } from './../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
