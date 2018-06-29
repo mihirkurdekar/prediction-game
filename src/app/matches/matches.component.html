@@ -3,9 +3,9 @@
 <div *ngIf="isLoaded">
 
     <div>
-    <p-carousel headerText="Group A" [value]="matchResponse.groups.a.matches">
+    <p-carousel numVisible="6" headerText="Group A" [value]="matchResponse.groups.a.matches">
         <ng-template let-match pTemplate="item">
-            <div class="ui-grid ui-grid-responsive" [ngClass]="checkToday(match.date) ? 'today' : 'matchday'">
+            <div class="ui-grid ui-grid-responsive" id="{{'GrpA'+match.home_team+match.away_team}}" [ngClass]="checkToday(match.date) ? 'today' : 'matchday'">
                 <div class="ui-grid-row center-align">
                     <div class="ui-grid-col-6">
                         <img src={{matchResponse.teams[match.home_team-1].flag}} width="60px">
@@ -38,9 +38,9 @@
 </div>
 
 <div>
-    <p-carousel headerText="Group B" [value]="matchResponse.groups.b.matches">
+    <p-carousel numVisible="6" headerText="Group B" [value]="matchResponse.groups.b.matches">
         <ng-template let-match pTemplate="item">
-            <div class="ui-grid ui-grid-responsive" [ngClass]="checkToday(match.date) ? 'today' : 'matchday'">
+            <div class="ui-grid ui-grid-responsive" id="{{'GrpB'+match.home_team+match.away_team}}" [ngClass]="checkToday(match.date) ? 'today' : 'matchday'">
                 <div class="ui-grid-row center-align">
                     <div class="ui-grid-col-6">
                         <img src={{matchResponse.teams[match.home_team-1].flag}} width="60px">
@@ -74,9 +74,9 @@
 
 
 <div>
-    <p-carousel headerText="Group C" [value]="matchResponse.groups.c.matches">
+    <p-carousel numVisible="6" headerText="Group C" [value]="matchResponse.groups.c.matches">
         <ng-template let-match pTemplate="item">
-            <div class="ui-grid ui-grid-responsive" [ngClass]="checkToday(match.date) ? 'today' : 'matchday'">
+            <div class="ui-grid ui-grid-responsive" id="{{'GrpC'+match.home_team+match.away_team}}" [ngClass]="checkToday(match.date) ? 'today' : 'matchday'">
                 <div class="ui-grid-row center-align">
                     <div class="ui-grid-col-6">
                         <img src={{matchResponse.teams[match.home_team-1].flag}} width="60px">
@@ -109,9 +109,9 @@
 </div>
 
 <div>
-    <p-carousel headerText="Group D" [value]="matchResponse.groups.d.matches">
+    <p-carousel numVisible="6" headerText="Group D" [value]="matchResponse.groups.d.matches">
         <ng-template let-match pTemplate="item">
-            <div class="ui-grid ui-grid-responsive" [ngClass]="checkToday(match.date) ? 'today' : 'matchday'">
+            <div class="ui-grid ui-grid-responsive" id="{{'GrpD'+match.home_team+match.away_team}}" [ngClass]="checkToday(match.date) ? 'today' : 'matchday'">
                 <div class="ui-grid-row center-align">
                     <div class="ui-grid-col-6">
                         <img src={{matchResponse.teams[match.home_team-1].flag}} width="60px">
@@ -144,9 +144,9 @@
 </div>
 
 <div>
-    <p-carousel headerText="Group E" [value]="matchResponse.groups.e.matches">
+    <p-carousel numVisible="6" headerText="Group E" [value]="matchResponse.groups.e.matches">
         <ng-template let-match pTemplate="item">
-            <div class="ui-grid ui-grid-responsive" [ngClass]="checkToday(match.date) ? 'today' : 'matchday'">
+            <div class="ui-grid ui-grid-responsive" id="{{'GrpE'+match.home_team+match.away_team}}" [ngClass]="checkToday(match.date) ? 'today' : 'matchday'">
                 <div class="ui-grid-row center-align">
                     <div class="ui-grid-col-6">
                         <img src={{matchResponse.teams[match.home_team-1].flag}} width="60px">
@@ -179,9 +179,9 @@
 </div>
 
 <div>
-    <p-carousel headerText="Group F" [value]="matchResponse.groups.f.matches">
+    <p-carousel numVisible="6" headerText="Group F" [value]="matchResponse.groups.f.matches">
         <ng-template let-match pTemplate="item">
-            <div class="ui-grid ui-grid-responsive" [ngClass]="checkToday(match.date) ? 'today' : 'matchday'">
+            <div class="ui-grid ui-grid-responsive" id="{{'GrpF'+match.home_team+match.away_team}}" [ngClass]="checkToday(match.date) ? 'today' : 'matchday'">
                 <div class="ui-grid-row center-align">
                     <div class="ui-grid-col-6">
                         <img src={{matchResponse.teams[match.home_team-1].flag}} width="60px">
@@ -214,9 +214,9 @@
     </div>
 
     <div>
-    <p-carousel headerText="Group G" [value]="matchResponse.groups.g.matches">
+    <p-carousel numVisible="6" headerText="Group G" [value]="matchResponse.groups.g.matches">
         <ng-template let-match pTemplate="item">
-            <div class="ui-grid ui-grid-responsive" [ngClass]="checkToday(match.date) ? 'today' : 'matchday'">
+            <div class="ui-grid ui-grid-responsive" id="{{'GrpG'+match.home_team+match.away_team}}" [ngClass]="checkToday(match.date) ? 'today' : 'matchday'">
                 <div class="ui-grid-row center-align">
                     <div class="ui-grid-col-6">
                         <img src={{matchResponse.teams[match.home_team-1].flag}} width="60px">
@@ -249,9 +249,9 @@
     </div>
 
     <div>
-    <p-carousel headerText="Group H" [value]="matchResponse.groups.h.matches">
+    <p-carousel numVisible="6" headerText="Group H" [value]="matchResponse.groups.h.matches">
         <ng-template let-match pTemplate="item">
-            <div class="ui-grid ui-grid-responsive" [ngClass]="checkToday(match.date) ? 'today' : 'matchday'">
+            <div class="ui-grid ui-grid-responsive" id="{{'GrpH'+match.home_team+match.away_team}}" [ngClass]="checkToday(match.date) ? 'today' : 'matchday'">
                 <div class="ui-grid-row center-align">
                     <div class="ui-grid-col-6">
                         <img src={{matchResponse.teams[match.home_team-1].flag}} width="60px">
