@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiHost: 'http://52.66.102.102:3000',
+  apiHost: 'http://localhost:3000',
   matchHost: 'https://raw.githubusercontent.com/lsv/fifa-worldcup-2018/master/data.json'
 };
 
