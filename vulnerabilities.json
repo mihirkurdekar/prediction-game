@@ -1,0 +1,1210 @@
+{
+  "data": {
+    "repository": {
+      "vulnerabilityAlerts": {
+        "nodes": [
+          {
+            "createdAt": "2018-06-10T20:44:49Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "hoek"
+              },
+              "advisory": {
+                "description": "Versions of `hoek` prior to 4.2.1 and 5.0.3 are vulnerable to prototype pollution.\n\nThe `merge` function, and the `applyToDefaults` and `applyToDefaultsWithShallow` functions which leverage `merge` behind the scenes, are vulnerable to a prototype pollution attack when provided an _unvalidated_ payload created from a JSON string containing the `__proto__` property.\n\nThis can be demonstrated like so:\n\n```javascript\nvar Hoek = require('hoek');\nvar malicious_payload = '{\"__proto__\":{\"oops\":\"It works !\"}}';\n\nvar a = {};\nconsole.log(\"Before : \" + a.oops);\nHoek.merge({}, JSON.parse(malicious_payload));\nconsole.log(\"After : \" + a.oops);\n```\n\nThis type of attack can be used to overwrite existing properties causing a potential denial of service.\n\n\n## Recommendation\n\nUpdate to version 4.2.1, 5.0.3 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2020-09-13T06:49:13Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "yargs-parser"
+              },
+              "advisory": {
+                "description": "Affected versions of `yargs-parser` are vulnerable to prototype pollution. Arguments are not properly sanitized, allowing an attacker to modify the prototype of `Object`, causing the addition or modification of an existing property that will exist on all objects.  \nParsing the argument `--foo.__proto__.bar baz'` adds a `bar` property with value `baz` to all objects. This is only exploitable if attackers have control over the arguments being passed to `yargs-parser`.\n\n\n\n## Recommendation\n\nUpgrade to versions 13.1.2, 15.0.1, 18.1.1 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2020-09-18T22:49:06Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "node-forge"
+              },
+              "advisory": {
+                "description": "The package node-forge before 0.10.0 is vulnerable to Prototype Pollution via the util.setPath function. Note: version 0.10.0 is a breaking change removing the vulnerable functions."
+              }
+            }
+          },
+          {
+            "createdAt": "2020-10-20T04:45:35Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "webpack-subresource-integrity"
+              },
+              "advisory": {
+                "description": "### Impact\n\nAll dynamically loaded chunks receive an invalid integrity hash that is ignored by the browser, and therefore the browser cannot validate their integrity. This removes the additional level of protection offered by SRI for such chunks. Top-level chunks are unaffected.\n\n### Patches\n\nThis issue is patched in version 1.5.1.\n\n### Workarounds\n\nN/A\n\n### References\n\nhttps://github.com/waysact/webpack-subresource-integrity/issues/131\n\n### For more information\nIf you have any questions or comments about this advisory:\n* Comment on [webpack-subresource-integrity issue #131](https://github.com/waysact/webpack-subresource-integrity/issues/131)\n* Or email us at [security@waysact.com](mailto:security@waysact.com)"
+              }
+            }
+          },
+          {
+            "createdAt": "2020-12-12T15:17:56Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "ini"
+              },
+              "advisory": {
+                "description": "### Overview\nThe `ini` npm package before version 1.3.6 has a Prototype Pollution vulnerability.\n\nIf an attacker submits a malicious INI file to an application that parses it with `ini.parse`, they will pollute the prototype on the application. This can be exploited further depending on the context.\n\n### Patches\n\nThis has been patched in 1.3.6.\n\n### Steps to reproduce\n\npayload.ini\n```\n[__proto__]\npolluted = \"polluted\"\n```\n\npoc.js:\n```\nvar fs = require('fs')\nvar ini = require('ini')\n\nvar parsed = ini.parse(fs.readFileSync('./payload.ini', 'utf-8'))\nconsole.log(parsed)\nconsole.log(parsed.__proto__)\nconsole.log(polluted)\n```\n\n```\n> node poc.js\n{}\n{ polluted: 'polluted' }\n{ polluted: 'polluted' }\npolluted\n```"
+              }
+            }
+          },
+          {
+            "createdAt": "2021-01-21T11:16:10Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "socket.io"
+              },
+              "advisory": {
+                "description": "The package socket.io before 2.4.0 are vulnerable to Insecure Defaults due to CORS Misconfiguration. All domains are whitelisted by default."
+              }
+            }
+          },
+          {
+            "createdAt": "2021-03-10T06:56:04Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "elliptic"
+              },
+              "advisory": {
+                "description": "The npm package `elliptic` before version 6.5.4 are vulnerable to Cryptographic Issues via the secp256k1 implementation in elliptic/ec/key.js. There is no check to confirm that the public key point passed into the derive function actually exists on the secp256k1 curve. This results in the potential for the private key used in this implementation to be revealed after a number of ECDH operations are performed."
+              }
+            }
+          },
+          {
+            "createdAt": "2021-03-31T05:43:27Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "y18n"
+              },
+              "advisory": {
+                "description": "### Overview\n\nThe npm package `y18n` before versions 3.2.2, 4.0.1, and 5.0.5 is vulnerable to Prototype Pollution. \n\n### POC\n\n```js\nconst y18n = require('y18n')();\n\ny18n.setLocale('__proto__');\ny18n.updateLocale({polluted: true});\n\nconsole.log(polluted); // true\n```\n\n### Recommendation\n\nUpgrade to version 3.2.2, 4.0.1, 5.0.5 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2021-04-21T23:13:19Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "sockjs"
+              },
+              "advisory": {
+                "description": "Incorrect handling of Upgrade header with the value websocket leads in crashing of containers hosting sockjs apps. This affects the package sockjs before 0.3.20."
+              }
+            }
+          },
+          {
+            "createdAt": "2021-04-30T12:34:43Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "ssri"
+              },
+              "advisory": {
+                "description": "npm `ssri` 5.2.2-6.0.1 and 7.0.0-8.0.0, processes SRIs using a regular expression which is vulnerable to a denial of service. Malicious SRIs could take an extremely long time to process, leading to denial of service. This issue only affects consumers using the strict option."
+              }
+            }
+          },
+          {
+            "createdAt": "2021-05-05T10:47:52Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "xmlhttprequest-ssl"
+              },
+              "advisory": {
+                "description": "This affects the package xmlhttprequest before 1.7.0; all versions of package xmlhttprequest-ssl. Provided requests are sent synchronously (`async=False` on `xhr.open`), malicious user input flowing into `xhr.send` could result in arbitrary code being injected and run."
+              }
+            }
+          },
+          {
+            "createdAt": "2021-05-07T19:59:21Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "handlebars"
+              },
+              "advisory": {
+                "description": "The package handlebars before 4.7.7 are vulnerable to Remote Code Execution (RCE) when selecting certain compiling options to compile templates coming from an untrusted source."
+              }
+            }
+          },
+          {
+            "createdAt": "2021-05-08T07:57:24Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "url-parse"
+              },
+              "advisory": {
+                "description": "url-parse before 1.5.0 mishandles certain uses of backslash such as http:\\/ and interprets the URI as a relative path."
+              }
+            }
+          },
+          {
+            "createdAt": "2021-05-09T13:25:33Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "hosted-git-info"
+              },
+              "advisory": {
+                "description": "The npm package `hosted-git-info` before 3.0.8 are vulnerable to Regular Expression Denial of Service (ReDoS) via regular expression shortcutMatch in the fromUrl function in index.js. The affected regular expression exhibits polynomial worst-case time complexity"
+              }
+            }
+          },
+          {
+            "createdAt": "2021-05-09T13:28:03Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "lodash"
+              },
+              "advisory": {
+                "description": "`lodash` versions prior to 4.17.21 are vulnerable to Command Injection via the template function."
+              }
+            }
+          },
+          {
+            "createdAt": "2021-05-26T01:43:02Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "xmlhttprequest-ssl"
+              },
+              "advisory": {
+                "description": "The xmlhttprequest-ssl package before 1.6.1 for Node.js disables SSL certificate validation by default, because rejectUnauthorized (when the property exists but is undefined) is considered to be false within the https.request function of Node.js. In other words, no certificate is ever rejected."
+              }
+            }
+          },
+          {
+            "createdAt": "2021-05-29T00:44:58Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "dns-packet"
+              },
+              "advisory": {
+                "description": "This affects the package dns-packet before versions 1.3.2 and 5.2.2. It creates buffers with allocUnsafe and does not always fill them before forming network packets. This can expose internal application memory over unencrypted network when querying crafted invalid domain names."
+              }
+            }
+          },
+          {
+            "createdAt": "2021-06-10T02:12:30Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "trim-newlines"
+              },
+              "advisory": {
+                "description": "@rkesters/gnuplot is an easy to use node module to draw charts using gnuplot and ps2pdf. The trim-newlines package before 3.0.1 and 4.x before 4.0.1 for Node.js has an issue related to regular expression denial-of-service (ReDoS) for the `.end()` method."
+              }
+            }
+          },
+          {
+            "createdAt": "2021-07-01T09:54:10Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "socket.io-parser"
+              },
+              "advisory": {
+                "description": "The `socket.io-parser` npm package before versions 3.3.2 and 3.4.1 allows attackers to cause a denial of service (memory consumption) via a large packet because a concatenation approach is used."
+              }
+            }
+          },
+          {
+            "createdAt": "2021-08-05T01:00:05Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "tar"
+              },
+              "advisory": {
+                "description": "### Impact\n\nArbitrary File Creation, Arbitrary File Overwrite, Arbitrary Code Execution\n\n`node-tar` aims to prevent extraction of absolute file paths by turning absolute paths into relative paths when the `preservePaths` flag is not set to `true`. This is achieved by stripping the absolute path root from any absolute file paths contained in a tar file. For example `/home/user/.bashrc` would turn into `home/user/.bashrc`. \n\nThis logic was insufficient when file paths contained repeated path roots such as `////home/user/.bashrc`. `node-tar` would only strip a single path root from such paths. When given an absolute file path with repeating path roots, the resulting path (e.g. `///home/user/.bashrc`) would still resolve to an absolute path, thus allowing arbitrary file creation and overwrite. \n\n### Patches\n\n3.2.2 || 4.4.14 || 5.0.6 || 6.1.1\n\nNOTE: an adjacent issue [CVE-2021-32803](https://github.com/npm/node-tar/security/advisories/GHSA-r628-mhmh-qjhw) affects this release level. Please ensure you update to the latest patch levels that address CVE-2021-32803 as well if this adjacent issue affects your `node-tar` use case.\n\n### Workarounds\n\nUsers may work around this vulnerability without upgrading by creating a custom `onentry` method which sanitizes the `entry.path` or a `filter` method which removes entries with absolute paths.\n\n```js\nconst path = require('path')\nconst tar = require('tar')\n\ntar.x({\n  file: 'archive.tgz',\n  // either add this function...\n  onentry: (entry) => {\n    if (path.isAbsolute(entry.path)) {\n      entry.path = sanitizeAbsolutePathSomehow(entry.path)\n      entry.absolute = path.resolve(entry.path)\n    }\n  },\n\n  // or this one\n  filter: (file, entry) => {\n    if (path.isAbsolute(entry.path)) {\n      return false\n    } else {\n      return true\n    }\n  }\n})\n```\n\nUsers are encouraged to upgrade to the latest patch versions, rather than attempt to sanitize tar input themselves."
+              }
+            }
+          },
+          {
+            "createdAt": "2021-08-11T22:32:29Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "path-parse"
+              },
+              "advisory": {
+                "description": "Affected versions of npm package `path-parse` are vulnerable to Regular Expression Denial of Service (ReDoS) via splitDeviceRe, splitTailRe, and splitPathRe regular expressions. ReDoS exhibits polynomial worst-case time complexity."
+              }
+            }
+          },
+          {
+            "createdAt": "2021-09-02T18:13:19Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "tar"
+              },
+              "advisory": {
+                "description": "### Impact\n\nArbitrary File Creation, Arbitrary File Overwrite, Arbitrary Code Execution\n\nnode-tar aims to guarantee that any file whose location would be outside of the extraction target directory is not extracted. This is, in part, accomplished by sanitizing absolute paths of entries within the archive, skipping archive entries that contain `..` path portions, and resolving the sanitized paths against the extraction target directory.\n\nThis logic was insufficient on Windows systems when extracting tar files that contained a path that was not an absolute path, but specified a drive letter different from the extraction target, such as `C:some\\path`.  If the drive letter does not match the extraction target, for example `D:\\extraction\\dir`, then the result of `path.resolve(extractionDirectory, entryPath)` would resolve against the current working directory on the `C:` drive, rather than the extraction target directory.\n\nAdditionally, a `..` portion of the path could occur immediately after the drive letter, such as `C:../foo`, and was not properly sanitized by the logic that checked for `..` within the normalized and split portions of the path.\n\nThis only affects users of `node-tar` on Windows systems.\n\n### Patches\n\n4.4.18 || 5.0.10 || 6.1.9\n\n### Workarounds\n\nThere is no reasonable way to work around this issue without performing the same path normalization procedures that node-tar now does.\n\nUsers are encouraged to upgrade to the latest patched versions of node-tar, rather than attempt to sanitize paths themselves.\n\n### Fix\n\nThe fixed versions strip path roots from all paths prior to being resolved against the extraction target folder, even if such paths are not \"absolute\".\n\nAdditionally, a path starting with a drive letter and then two dots, like `c:../`, would bypass the check for `..` path portions.  This is checked properly in the patched versions.\n\nFinally, a defense in depth check is added, such that if the `entry.absolute` is outside of the extraction taret, and we are not in preservePaths:true mode, a warning is raised on that entry, and it is skipped.  Currently, it is believed that this check is redundant, but it did catch some oversights in development.\n"
+              }
+            }
+          },
+          {
+            "createdAt": "2021-09-22T16:21:51Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "nth-check"
+              },
+              "advisory": {
+                "description": "There is a Regular Expression Denial of Service (ReDoS) vulnerability in nth-check that causes a denial of service when parsing crafted invalid CSS nth-checks.\n\nThe ReDoS vulnerabilities of the regex are mainly due to the sub-pattern `\\s*(?:([+-]?)\\s*(\\d+))?` with quantified overlapping adjacency and can be exploited with the following code.\n\n**Proof of Concept**\n```js\n// PoC.js\nvar nthCheck = require(\"nth-check\")\nfor(var i = 1; i <= 50000; i++) {\n    var time = Date.now();\n    var attack_str = '2n' + ' '.repeat(i*10000)+\"!\";\n    try {\n        nthCheck.parse(attack_str) \n    }\n    catch(err) {\n        var time_cost = Date.now() - time;\n        console.log(\"attack_str.length: \" + attack_str.length + \": \" + time_cost+\" ms\")\n    }\n}\n```\n\n**The Output**\n```\nattack_str.length: 10003: 174 ms\nattack_str.length: 20003: 1427 ms\nattack_str.length: 30003: 2602 ms\nattack_str.length: 40003: 4378 ms\nattack_str.length: 50003: 7473 ms\n```"
+              }
+            }
+          },
+          {
+            "createdAt": "2021-10-06T00:33:51Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "url-parse"
+              },
+              "advisory": {
+                "description": "# Overview\n\nAffected versions of npm `url-parse` are vulnerable to URL Redirection to Untrusted Site.\n\n# Impact\n\nDepending on library usage and attacker intent, impacts may include allow/block list bypasses, SSRF attacks, open redirects, or other undesired behavior."
+              }
+            }
+          },
+          {
+            "createdAt": "2021-11-08T19:25:59Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "jsonpointer"
+              },
+              "advisory": {
+                "description": "This affects the package `jsonpointer` before `5.0.0`. A type confusion vulnerability can lead to a bypass of a previous Prototype Pollution fix when the pointer components are arrays."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-01-14T16:49:36Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "follow-redirects"
+              },
+              "advisory": {
+                "description": "follow-redirects is vulnerable to Exposure of Private Personal Information to an Unauthorized Actor"
+              }
+            }
+          },
+          {
+            "createdAt": "2022-01-15T00:21:03Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "node-forge"
+              },
+              "advisory": {
+                "description": "### Impact\nThe `forge.debug` API had a potential prototype pollution issue if called with untrusted input. The API was only used for internal debug purposes in a safe way and never documented or advertised.  It is suspected that uses of this API, if any exist, would likely not have used untrusted inputs in a vulnerable way.\n\n### Patches\nThe `forge.debug` API and related functions were removed in 1.0.0.\n\n### Workarounds\nDon't use the `forge.debug` API directly or indirectly with untrusted input.\n\n### References\n- https://www.huntr.dev/bounties/1-npm-node-forge/\n\n### For more information\nIf you have any questions or comments about this advisory:\n* Open an issue in [forge](https://github.com/digitalbazaar/forge).\n* Email us at support@digitalbazaar.com."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-01-15T00:21:04Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "node-forge"
+              },
+              "advisory": {
+                "description": "### Impact\nThe regex used for the `forge.util.parseUrl` API would not properly parse certain inputs resulting in a parsed data structure that could lead to undesired behavior.\n\n### Patches\n`forge.util.parseUrl` and other very old related URL APIs were removed in 1.0.0 in favor of letting applications use the more modern WHATWG URL Standard API.\n\n### Workarounds\nEnsure code does not directly or indirectly call `forge.util.parseUrl` with untrusted input.\n\n### References\n- https://www.huntr.dev/bounties/41852c50-3c6d-4703-8c55-4db27164a4ae/\n\n### For more information\nIf you have any questions or comments about this advisory:\n* Open an issue in [forge](https://github.com/digitalbazaar/forge)\n* Email us at support@digitalbazaar.com\n"
+              }
+            }
+          },
+          {
+            "createdAt": "2022-01-21T22:01:31Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "log4js"
+              },
+              "advisory": {
+                "description": "### Impact\r\nDefault file permissions for log files created by the file, fileSync and dateFile appenders are world-readable (in unix). This could cause problems if log files contain sensitive information. This would affect any users that have not supplied their own permissions for the files via the mode parameter in the config.\r\n\r\n### Patches\r\nFixed by:\r\n* https://github.com/log4js-node/log4js-node/pull/1141\r\n* https://github.com/log4js-node/streamroller/pull/87\r\n\r\nReleased to NPM in log4js@6.4.0\r\n\r\n### Workarounds\r\nEvery version of log4js published allows passing the mode parameter to the configuration of file appenders, see the documentation for details.\r\n\r\n### References\r\n\r\nThanks to [ranjit-git](https://www.huntr.dev/users/ranjit-git) for raising the issue, and to @lamweili for fixing the problem.\r\n\r\n### For more information\r\nIf you have any questions or comments about this advisory:\r\n* Open an issue in [logj4s-node](https://github.com/log4js-node/log4js-node)\r\n* Ask a question in the [slack channel](https://join.slack.com/t/log4js-node/shared_invite/enQtODkzMDQ3MzExMDczLWUzZmY0MmI0YWI1ZjFhODY0YjI0YmU1N2U5ZTRkOTYyYzg3MjY5NWI4M2FjZThjYjdiOGM0NjU2NzBmYTJjOGI)\r\n* Email us at [gareth.nomiddlename@gmail.com](mailto:gareth.nomiddlename@gmail.com)\r\n"
+              }
+            }
+          },
+          {
+            "createdAt": "2022-01-23T03:01:26Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "node-forge"
+              },
+              "advisory": {
+                "description": "parseUrl functionality in node-forge mishandles certain uses of backslash such as `https:/\\/\\/\\` and interprets the URI as a relative path. "
+              }
+            }
+          },
+          {
+            "createdAt": "2022-02-10T15:37:11Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "node-sass"
+              },
+              "advisory": {
+                "description": "Certificate validation in node-sass 2.0.0 to 6.0.1 is disabled when requesting binaries even if the user is not specifying an alternative download path."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-02-11T05:22:57Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "chownr"
+              },
+              "advisory": {
+                "description": "A TOCTOU issue in the chownr package before 1.1.0 for Node.js 10.10 could allow a local attacker to trick it into descending into unintended directories via symlink attacks."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-02-11T07:34:54Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "handlebars"
+              },
+              "advisory": {
+                "description": "Handlebars before 4.4.5 allows Regular Expression Denial of Service (ReDoS) because of eager matching. The parser may be forced into an endless loop while processing crafted templates. This may allow attackers to exhaust system resources."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-02-11T07:52:37Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "handlebars"
+              },
+              "advisory": {
+                "description": "Handlebars before 3.0.8 and 4.x before 4.5.3 is vulnerable to Arbitrary Code Execution. The lookup helper fails to properly validate templates, allowing attackers to submit templates that execute arbitrary JavaScript. This can be used to run arbitrary code on a server processing Handlebars templates or in a victim's browser (effectively serving as XSS)."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-02-11T09:51:37Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "karma"
+              },
+              "advisory": {
+                "description": "karma prior to version 6.3.14 contains a cross-site scripting vulnerability."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-02-11T12:56:20Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "handlebars"
+              },
+              "advisory": {
+                "description": "The package handlebars before 4.7.7 are vulnerable to Prototype Pollution when selecting certain compiling options to compile templates coming from an untrusted source."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-02-13T14:06:37Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "ajv"
+              },
+              "advisory": {
+                "description": "An issue was discovered in ajv.validate() in Ajv (aka Another JSON Schema Validator) 6.12.2. A carefully crafted JSON schema could be provided that allows execution of other code by prototype pollution. (While untrusted schemas are recommended against, the worst case of an untrusted schema should be a denial of service, not execution of code.)"
+              }
+            }
+          },
+          {
+            "createdAt": "2022-02-13T15:28:43Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "follow-redirects"
+              },
+              "advisory": {
+                "description": "Exposure of Sensitive Information to an Unauthorized Actor in NPM follow-redirects prior to 1.14.8."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-02-18T18:06:19Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "url-parse"
+              },
+              "advisory": {
+                "description": "Authorization Bypass Through User-Controlled Key in NPM url-parse prior to 1.5.6."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-02-27T05:05:40Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "url-parse"
+              },
+              "advisory": {
+                "description": "A specially crafted URL with an '@' sign but empty user info and no hostname, when parsed with url-parse, url-parse will return the incorrect href. In particular,\n\n```js\nparse(\\\"http://@/127.0.0.1\\\")\n```\nWill return:\n```yaml\n{\n slashes: true,\n protocol: 'http:',\n hash: '',\n query: '',\n pathname: '/127.0.0.1',\n auth: '',\n host: '',\n port: '',\n hostname: '',\n password: '',\n username: '',\n origin: 'null',\n href: 'http:///127.0.0.1'\n }\n```\nIf the 'hostname' or 'origin' attributes of the output from url-parse are used in security decisions and the final 'href' attribute of the output is then used to make a request, the decision may be incorrect.\n"
+              }
+            }
+          },
+          {
+            "createdAt": "2022-02-27T05:05:40Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "url-parse"
+              },
+              "advisory": {
+                "description": "url-parse prior to version 1.5.8 is vulnerable to Authorization Bypass Through User-Controlled Key."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-03-02T08:50:08Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "karma"
+              },
+              "advisory": {
+                "description": "Karma before 6.3.16 is vulnerable to Open Redirect due to missing validation of the return_url query parameter."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-03-03T01:46:40Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "url-parse"
+              },
+              "advisory": {
+                "description": "Leading control characters in a URL are not stripped when passed into url-parse. This can cause input URLs to be mistakenly be interpreted as a relative URL without a hostname and protocol, while the WHATWG URL parser will trim control characters and treat it as an absolute URL.\n\nIf url-parse is used in security decisions involving the hostname / protocol, and the input URL is used in a client which uses the WHATWG URL parser, the decision may be incorrect.\n\nThis can also lead to a cross-site scripting (XSS) vulnerability if url-parse is used to check for the javascript: protocol in URLs. See following example:\n```js\nconst parse = require('url-parse')\nconst express = require('express')\nconst app = express()\nconst port = 3000\n\nurl = parse(\\\"\\\\bjavascript:alert(1)\\\")\n\nconsole.log(url)\n\napp.get('/', (req, res) => {\n if (url.protocol !== \\\"javascript:\\\") {res.send(\\\"<a href=\\\\'\\\" + url.href + \\\"\\\\'>CLICK ME!</a>\\\")}\n })\n\napp.listen(port, () => {\n console.log(`Example app listening on port ${port}`)\n })\n```"
+              }
+            }
+          },
+          {
+            "createdAt": "2022-03-23T22:10:31Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "node-forge"
+              },
+              "advisory": {
+                "description": "### Impact\n\nRSA PKCS#1 v1.5 signature verification code does not check for tailing garbage bytes after decoding a `DigestInfo` ASN.1 structure. This can allow padding bytes to be removed and garbage data added to forge a signature when a low public exponent is being used.\n\n### Patches\n\nThe issue has been addressed in `node-forge` `1.3.0`.\n\n### References\n\nFor more information, please see\n[\"Bleichenbacher's RSA signature forgery based on implementation error\"](https://mailarchive.ietf.org/arch/msg/openpgp/5rnE9ZRN1AokBVj3VqblGlP63QE/)\nby Hal Finney.\n\n### For more information\n\nIf you have any questions or comments about this advisory:\n* Open an issue in [forge](https://github.com/digitalbazaar/forge)\n* Email us at [example email address](mailto:security@digitalbazaar.com)"
+              }
+            }
+          },
+          {
+            "createdAt": "2022-03-23T22:10:34Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "node-forge"
+              },
+              "advisory": {
+                "description": "### Impact\n\nRSA PKCS#1 v1.5 signature verification code is not properly checking `DigestInfo` for a proper ASN.1 structure. This can lead to successful verification with signatures that contain invalid structures but a valid digest.\n\n### Patches\n\nThe issue has been addressed in `node-forge` `1.3.0`.\n\n### For more information\n\nIf you have any questions or comments about this advisory:\n* Open an issue in [forge](https://github.com/digitalbazaar/forge)\n* Email us at [example email address](mailto:security@digitalbazaar.com)"
+              }
+            }
+          },
+          {
+            "createdAt": "2022-03-23T22:10:43Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "node-forge"
+              },
+              "advisory": {
+                "description": "### Impact\n\nRSA PKCS#1 v1.5 signature verification code is lenient in checking the digest algorithm structure. This can allow a crafted structure that steals padding bytes and uses unchecked portion of the PKCS#1 encoded message to forge a signature when a low public exponent is being used.\n\n### Patches\n\nThe issue has been addressed in `node-forge` `1.3.0`.\n\n### References\n\nFor more information, please see\n[\"Bleichenbacher's RSA signature forgery based on implementation error\"](https://mailarchive.ietf.org/arch/msg/openpgp/5rnE9ZRN1AokBVj3VqblGlP63QE/)\nby Hal Finney.\n\n### For more information\n\nIf you have any questions or comments about this advisory:\n* Open an issue in [forge](https://github.com/digitalbazaar/forge)\n* Email us at [example email address](mailto:security@digitalbazaar.com)"
+              }
+            }
+          },
+          {
+            "createdAt": "2022-05-23T23:20:20Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "hawk"
+              },
+              "advisory": {
+                "description": "Hawk is an HTTP authentication scheme providing mechanisms for making authenticated HTTP requests with partial cryptographic verification of the request and response, covering the HTTP method, request URI, host, and optionally the request payload. Hawk used a regular expression to parse `Host` HTTP header (`Hawk.utils.parseHost()`), which was subject to regular expression DoS attack - meaning each added character in the attacker's input increases the computation time exponentially. `parseHost()` was patched in `9.0.1` to use built-in `URL` class to parse hostname instead.`Hawk.authenticate()` accepts `options` argument. If that contains `host` and `port`, those would be used instead of a call to `utils.parseHost()`."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-06-01T05:20:32Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "eventsource"
+              },
+              "advisory": {
+                "description": "When fetching an url with a link to an external site (Redirect), the users Cookies & Autorisation headers are leaked to the third party application. According to the same-origin-policy, the header should be \"sanitized.\""
+              }
+            }
+          },
+          {
+            "createdAt": "2022-07-08T03:02:47Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "scss-tokenizer"
+              },
+              "advisory": {
+                "description": "All versions of the package `scss-tokenizer` prior to 0.4.3 are vulnerable to Regular Expression Denial of Service (ReDoS) via the `loadAnnotation()` function, due to the usage of insecure regex."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-09-08T15:33:40Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "jszip"
+              },
+              "advisory": {
+                "description": "This affects the package jszip before 3.7.0. Crafting a new zip file with filenames set to Object prototype values (e.g `__proto__`, `toString`, etc) results in a returned object with a modified prototype instance."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-10-06T03:17:52Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "css-what"
+              },
+              "advisory": {
+                "description": "The package css-what before 2.1.3 is vulnerable to Regular Expression Denial of Service (ReDoS) due to the use of insecure regular expression in the `re_attr` variable of index.js. The exploitation of this vulnerability could be triggered via the parse function."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-11-09T21:00:18Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "minimatch"
+              },
+              "advisory": {
+                "description": "A vulnerability was found in the minimatch package. This flaw allows a Regular Expression Denial of Service (ReDoS) when calling the braceExpand function with specific arguments, resulting in a Denial of Service."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-11-10T05:54:06Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "socket.io-parser"
+              },
+              "advisory": {
+                "description": "Due to improper type validation in the `socket.io-parser` library (which is used by the `socket.io` and `socket.io-client` packages to encode and decode Socket.IO packets), it is possible to overwrite the _placeholder object which allows an attacker to place references to functions at arbitrary places in the resulting query object.\n\nExample:\n\n```js\nconst decoder = new Decoder();\n\ndecoder.on(\"decoded\", (packet) => {\n console.log(packet.data); // prints [ 'hello', [Function: splice] ]\n})\n\ndecoder.add('51-[\"hello\",{\"_placeholder\":true,\"num\":\"splice\"}]');\ndecoder.add(Buffer.from(\"world\"));\n```\n\nThis bubbles up in the `socket.io` package:\n\n```js\nio.on(\"connection\", (socket) => {\n socket.on(\"hello\", (val) => {\n // here, \"val\" could be a function instead of a buffer\n });\n});\n```\n\n:warning: IMPORTANT NOTE :warning:\n\nYou need to make sure that the payload that you received from the client is actually a `Buffer` object:\n\n```js\nio.on(\"connection\", (socket) => {\n socket.on(\"hello\", (val) => {\n if (!Buffer.isBuffer(val)) {\n socket.disconnect();\n return;\n }\n // ...\n });\n});\n```\n\n**If that's already the case, then you are not impacted by this issue, and there is no way an attacker could make your server crash (or escalate privileges, ...).**\n\nExample of values that could be sent by a malicious user:\n\n- a number that is out of bounds\n\nSample packet: `451-[\"hello\",{\"_placeholder\":true,\"num\":10}]`\n\n```js\nio.on(\"connection\", (socket) => {\n socket.on(\"hello\", (val) => {\n // val is `undefined`\n });\n});\n```\n\n- a value that is not a number, like `undefined`\n\nSample packet: `451-[\"hello\",{\"_placeholder\":true,\"num\":undefined}]`\n\n```js\nio.on(\"connection\", (socket) => {\n socket.on(\"hello\", (val) => {\n // val is `undefined`\n });\n});\n```\n\n- a string that is part of the prototype of `Array`, like \"push\"\n\nSample packet: `451-[\"hello\",{\"_placeholder\":true,\"num\":\"push\"}]`\n\n```js\nio.on(\"connection\", (socket) => {\n socket.on(\"hello\", (val) => {\n // val is a reference to the \"push\" function\n });\n});\n```\n\n- a string that is part of the prototype of `Object`, like \"hasOwnProperty\"\n\nSample packet: `451-[\"hello\",{\"_placeholder\":true,\"num\":\"hasOwnProperty\"}]`\n\n```js\nio.on(\"connection\", (socket) => {\n socket.on(\"hello\", (val) => {\n // val is a reference to the \"hasOwnProperty\" function\n });\n});\n```\n\nThis should be fixed by:\n\n- https://github.com/socketio/socket.io-parser/commit/b5d0cb7dc56a0601a09b056beaeeb0e43b160050, included in `socket.io-parser@4.2.1`\n- https://github.com/socketio/socket.io-parser/commit/b559f050ee02bd90bd853b9823f8de7fa94a80d4, included in `socket.io-parser@4.0.5`\n- https://github.com/socketio/socket.io-parser/commit/04d23cecafe1b859fb03e0cbf6ba3b74dff56d14, included in `socket.io-parser@3.4.2`\n- https://github.com/socketio/socket.io-parser/commit/fb21e422fc193b34347395a33e0f625bebc09983, included in `socket.io-parser@3.3.3`\n\n### Dependency analysis for the `socket.io` package\n\n| `socket.io` version | `socket.io-parser` version | Covered? |\n|---------------------|---------------------------------------------------------------------------------------------------------|------------------------|\n| `4.5.2...latest` | `~4.2.0` ([ref](https://github.com/socketio/socket.io/commit/9890b036cf942f6b6ad2afeb6a8361c32cd5d528)) | Yes :heavy_check_mark: |\n| `4.1.3...4.5.1` | `~4.0.4` ([ref](https://github.com/socketio/socket.io/commit/7c44893d7878cd5bba1eff43150c3e664f88fb57)) | Yes :heavy_check_mark: |\n| `3.0.5...4.1.2` | `~4.0.3` ([ref](https://github.com/socketio/socket.io/commit/752dfe3b1e5fecda53dae899b4a39e6fed5a1a17)) | Yes :heavy_check_mark: |\n| `3.0.0...3.0.4` | `~4.0.1` ([ref](https://github.com/socketio/socket.io/commit/1af3267e3f5f7884214cf2ca4d5282d620092fb0)) | Yes :heavy_check_mark: |\n| `2.3.0...2.5.0` | `~3.4.0` ([ref](https://github.com/socketio/socket.io/commit/cf39362014f5ff13a17168b74772c43920d6e4fd)) | Yes :heavy_check_mark: |\n\n\n### Dependency analysis for the `socket.io-client` package\n\n| `socket.io-client` version | `socket.io-parser` version | Covered? |\n|----------------------------|----------------------------------------------------------------------------------------------------------------|------------------------------------|\n| `4.5.0...latest` | `~4.2.0` ([ref](https://github.com/socketio/socket.io-client/commit/b862924b7f1720979e5db2f0154906b305d420e3)) | Yes :heavy_check_mark: |\n| `4.3.0...4.4.1` | `~4.1.1` ([ref](https://github.com/socketio/socket.io-client/commit/91b948b8607166fcc79f028a6428819277214188)) | No, but the impact is very limited |\n| `3.1.0...4.2.0` | `~4.0.4` ([ref](https://github.com/socketio/socket.io-client/commit/5d9b4eb42b1f5778e6f033096694acb331b132c4)) | Yes :heavy_check_mark: |\n| `3.0.5` | `~4.0.3` ([ref](https://github.com/socketio/socket.io-client/commit/cf9fc358365cc15a41260a51dc186c881bf086ca)) | Yes :heavy_check_mark: |\n| `3.0.0...3.0.4` | `~4.0.1` ([ref](https://github.com/socketio/socket.io-client/commit/b7e07ba633ceb9c1dc94cc894c10b9bfca536c7a)) | Yes :heavy_check_mark: |\n| `2.2.0...2.5.0` | `~3.3.0` ([ref](https://github.com/socketio/socket.io-client/commit/06e9a4ca2621176c30c352b2ba8b34fa42b8d0ba)) | Yes :heavy_check_mark: |\n"
+              }
+            }
+          },
+          {
+            "createdAt": "2022-11-10T19:54:16Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "loader-utils"
+              },
+              "advisory": {
+                "description": "Prototype pollution vulnerability in function parseQuery in parseQuery.js in webpack loader-utils prior to version 2.0.3 via the name variable in parseQuery.js."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-11-17T14:28:39Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "loader-utils"
+              },
+              "advisory": {
+                "description": "A regular expression denial of service (ReDoS) flaw was found in Function interpolateName in interpolateName.js in webpack loader-utils via the resourcePath variable in interpolateName.js. A badly or maliciously formed string could be used to send crafted requests that cause a system to crash or take a disproportional amount of time to process. This issue has been patched in versions 1.4.2, 2.0.4 and 3.2.1."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-11-17T14:47:19Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "loader-utils"
+              },
+              "advisory": {
+                "description": "A Regular expression denial of service (ReDoS) flaw was found in Function interpolateName in interpolateName.js in webpack loader-utils 2.0.0 via the url variable in interpolateName.js. A badly or maliciously formed string could be used to send crafted requests that cause a system to crash or take a disproportional amount of time to process. This issue has been patched in versions 1.4.2, 2.0.4 and 3.2.1."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-11-22T07:32:52Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "engine.io"
+              },
+              "advisory": {
+                "description": "### Impact\n\nA specially crafted HTTP request can trigger an uncaught exception on the Engine.IO server, thus killing the Node.js process.\n\n```\nevents.js:292\n      throw er; // Unhandled 'error' event\n      ^\n\nError: read ECONNRESET\n    at TCP.onStreamRead (internal/stream_base_commons.js:209:20)\nEmitted 'error' event on Socket instance at:\n    at emitErrorNT (internal/streams/destroy.js:106:8)\n    at emitErrorCloseNT (internal/streams/destroy.js:74:3)\n    at processTicksAndRejections (internal/process/task_queues.js:80:21) {\n  errno: -104,\n  code: 'ECONNRESET',\n  syscall: 'read'\n}\n```\n\nThis impacts all the users of the [`engine.io`](https://www.npmjs.com/package/engine.io) package, including those who uses depending packages like [`socket.io`](https://www.npmjs.com/package/socket.io).\n\n### Patches\n\nA fix has been released today (2022/11/20):\n\n| Version range     | Fixed version |\n|-------------------|---------------|\n| `engine.io@3.x.y` | `3.6.1`       |\n| `engine.io@6.x.y` | `6.2.1`       |\n\nFor `socket.io` users:\n\n| Version range               | `engine.io` version | Needs minor update?                                                                                    |\n|-----------------------------|---------------------|--------------------------------------------------------------------------------------------------------|\n| `socket.io@4.5.x`           | `~6.2.0`            | `npm audit fix` should be sufficient                                                                   |\n| `socket.io@4.4.x`           | `~6.1.0`            | Please upgrade to `socket.io@4.5.x`                                                                    |\n| `socket.io@4.3.x`           | `~6.0.0`            | Please upgrade to `socket.io@4.5.x`                                                                    |\n| `socket.io@4.2.x`           | `~5.2.0`            | Please upgrade to `socket.io@4.5.x`                                                                    |\n| `socket.io@4.1.x`           | `~5.1.1`            | Please upgrade to `socket.io@4.5.x`                                                                    |\n| `socket.io@4.0.x`           | `~5.0.0`            | Please upgrade to `socket.io@4.5.x`                                                                    |\n| `socket.io@3.1.x`           | `~4.1.0`            | Please upgrade to `socket.io@4.5.x` (see [here](https://socket.io/docs/v4/migrating-from-3-x-to-4-0/)) |\n| `socket.io@3.0.x`           | `~4.0.0`            | Please upgrade to `socket.io@4.5.x` (see [here](https://socket.io/docs/v4/migrating-from-3-x-to-4-0/)) |\n| `socket.io@2.5.0`           | `~3.6.0`            | `npm audit fix` should be sufficient                                                                   |\n| `socket.io@2.4.x` and below | `~3.5.0`            | Please upgrade to `socket.io@2.5.0`                                                                    |\n\n### Workarounds\n\nThere is no known workaround except upgrading to a safe version.\n\n### For more information\n\nIf you have any questions or comments about this advisory:\n\n* Open an issue in [`engine.io`](https://github.com/socketio/engine.io)\n\nThanks to [Jonathan Neve](https://github.com/jonathanneve) for the responsible disclosure.\n"
+              }
+            }
+          },
+          {
+            "createdAt": "2022-12-06T22:15:00Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "decode-uri-component"
+              },
+              "advisory": {
+                "description": "decode-uri-component 0.2.0 is vulnerable to Improper Input Validation resulting in DoS."
+              }
+            }
+          },
+          {
+            "createdAt": "2022-12-11T18:46:33Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "qs"
+              },
+              "advisory": {
+                "description": "qs before 6.10.3 allows attackers to cause a Node process hang because an `__ proto__` key can be used. In many typical web framework use cases, an unauthenticated remote attacker can place the attack payload in the query string of the URL that is used to visit the application, such as `a[__proto__]=b&a[__proto__]&a[length]=100000000`. The fix was backported to qs 6.9.7, 6.8.3, 6.7.3, 6.6.1, 6.5.3, 6.4.1, 6.3.3, and 6.2.4."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-01-06T06:45:03Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "json5"
+              },
+              "advisory": {
+                "description": "The `parse` method of the JSON5 library before and including version `2.2.1` does not restrict parsing of keys named `__proto__`, allowing specially crafted strings to pollute the prototype of the resulting object.\n\nThis vulnerability pollutes the prototype of the object returned by `JSON5.parse` and not the global Object prototype, which is the commonly understood definition of Prototype Pollution. However, polluting the prototype of a single object can have significant security impact for an application if the object is later used in trusted operations.\n\n## Impact\nThis vulnerability could allow an attacker to set arbitrary and unexpected keys on the object returned from `JSON5.parse`. The actual impact will depend on how applications utilize the returned object and how they filter unwanted keys, but could include denial of service, cross-site scripting, elevation of privilege, and in extreme cases, remote code execution.\n\n## Mitigation\nThis vulnerability is patched in json5 v2.2.2 and later. A patch has also been backported for json5 v1 in versions v1.0.2 and later.\n\n## Details\n \nSuppose a developer wants to allow users and admins to perform some risky operation, but they want to restrict what non-admins can do. To accomplish this, they accept a JSON blob from the user, parse it using `JSON5.parse`, confirm that the provided data does not set some sensitive keys, and then performs the risky operation using the validated data:\n \n```js\nconst JSON5 = require('json5');\n\nconst doSomethingDangerous = (props) => {\n  if (props.isAdmin) {\n    console.log('Doing dangerous thing as admin.');\n  } else {\n    console.log('Doing dangerous thing as user.');\n  }\n};\n\nconst secCheckKeysSet = (obj, searchKeys) => {\n  let searchKeyFound = false;\n  Object.keys(obj).forEach((key) => {\n    if (searchKeys.indexOf(key) > -1) {\n      searchKeyFound = true;\n    }\n  });\n  return searchKeyFound;\n};\n\nconst props = JSON5.parse('{\"foo\": \"bar\"}');\nif (!secCheckKeysSet(props, ['isAdmin', 'isMod'])) {\n  doSomethingDangerous(props); // \"Doing dangerous thing as user.\"\n} else {\n  throw new Error('Forbidden...');\n}\n```\n \nIf the user attempts to set the `isAdmin` key, their request will be rejected:\n \n```js\nconst props = JSON5.parse('{\"foo\": \"bar\", \"isAdmin\": true}');\nif (!secCheckKeysSet(props, ['isAdmin', 'isMod'])) {\n  doSomethingDangerous(props);\n} else {\n  throw new Error('Forbidden...'); // Error: Forbidden...\n}\n```\n \nHowever, users can instead set the `__proto__` key to `{\"isAdmin\": true}`. `JSON5` will parse this key and will set the `isAdmin` key on the prototype of the returned object, allowing the user to bypass the security check and run their request as an admin:\n \n```js\nconst props = JSON5.parse('{\"foo\": \"bar\", \"__proto__\": {\"isAdmin\": true}}');\nif (!secCheckKeysSet(props, ['isAdmin', 'isMod'])) {\n  doSomethingDangerous(props); // \"Doing dangerous thing as admin.\"\n} else {\n  throw new Error('Forbidden...');\n}\n ```"
+              }
+            }
+          },
+          {
+            "createdAt": "2023-02-02T01:04:35Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "jszip"
+              },
+              "advisory": {
+                "description": "loadAsync in JSZip before 3.8.0 allows Directory Traversal via a crafted ZIP archive."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-02-22T18:45:41Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "bootstrap"
+              },
+              "advisory": {
+                "description": "Versions of `bootstrap` prior to 3.4.1 for 3.x and 4.3.1 for 4.x are vulnerable to Cross-Site Scripting (XSS). The  `data-template` attribute of the tooltip and popover plugins lacks input sanitization and may allow attacker to execute arbitrary JavaScript.\n\n\n## Recommendation\n\nFor `bootstrap` 4.x upgrade to 4.3.1 or later.\nFor `bootstrap` 3.x upgrade to 3.4.1 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-03-03T18:49:36Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "minimist"
+              },
+              "advisory": {
+                "description": "Minimist prior to 1.2.6 and 0.2.4 is vulnerable to Prototype Pollution via file `index.js`, function `setKey()` (lines 69-95)."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-03-17T06:29:52Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "request"
+              },
+              "advisory": {
+                "description": "The `request` package through 2.88.2 for Node.js and the `@cypress/request` package prior to 3.0.0 allow a bypass of SSRF mitigations via an attacker-controller server that does a cross-protocol redirect (HTTP to HTTPS, or HTTPS to HTTP).\n\nNOTE: The `request` package is no longer supported by the maintainer."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-03-31T18:54:01Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "bootstrap"
+              },
+              "advisory": {
+                "description": "In Bootstrap starting in version 2.3.0 and prior to 3.4.0, as well as 4.x before 4.1.2, XSS is possible in the collapse data-parent attribute."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-01T09:25:44Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "jquery"
+              },
+              "advisory": {
+                "description": "### Impact\nPassing HTML from untrusted sources - even after sanitizing it - to one of jQuery's DOM manipulation methods (i.e. `.html()`, `.append()`, and others) may execute untrusted code.\n\n### Patches\nThis problem is patched in jQuery 3.5.0.\n\n### Workarounds\nTo workaround the issue without upgrading, adding the following to your code:\n\n```js\njQuery.htmlPrefilter = function( html ) {\n\treturn html;\n};\n```\n\nYou need to use at least jQuery 1.12/2.2 or newer to be able to apply this workaround.\n\n### References\nhttps://blog.jquery.com/2020/04/10/jquery-3-5-0-released/\nhttps://jquery.com/upgrade-guide/3.5/\n\n### For more information\nIf you have any questions or comments about this advisory, search for a relevant issue in [the jQuery repo](https://github.com/jquery/jquery/issues). If you don't find an answer, open a new issue."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-10T21:23:41Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "xml2js"
+              },
+              "advisory": {
+                "description": "xml2js versions before 0.5.0 allows an external attacker to edit or add new properties to an object. This is possible because the application does not properly validate incoming JSON keys, thus allowing the `__proto__` property to be edited."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:34Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "parsejson"
+              },
+              "advisory": {
+                "description": "Affected versions of `parsejson` are vulnerable to a regular expression denial of service when parsing untrusted user input.\n\n\n## Recommendation\n\nThe `parsejson` package has not been functionally updated since it was initially released.\n\nAdditionally, it provides functionality which is natively included in Node.js, and therefore the native `JSON.parse()` should be used, for both performance and security reasons."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:34Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "lodash"
+              },
+              "advisory": {
+                "description": "Versions of `lodash` before 4.17.5 are vulnerable to prototype pollution. \n\nThe vulnerable functions are 'defaultsDeep', 'merge', and 'mergeWith' which allow a malicious user to modify the prototype of `Object` via `__proto__` causing the addition or modification of an existing property that will exist on all objects.\n\n\n\n\n## Recommendation\n\nUpdate to version 4.17.5 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:34Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "adm-zip"
+              },
+              "advisory": {
+                "description": "Versions of `adm-zip` before 0.4.9 are vulnerable to arbitrary file write when used to extract a specifically crafted archive that contains path traversal filenames (`../../file.txt` for example).\n\n\n## Recommendation\n\nUpdate to version 0.4.9 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:34Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "debug"
+              },
+              "advisory": {
+                "description": "Affected versions of `debug` are vulnerable to regular expression denial of service when untrusted user input is passed into the `o` formatter. \n\nAs it takes 50,000 characters to block the event loop for 2 seconds, this issue is a low severity issue.\n\nThis was later re-introduced in version v3.2.0, and then repatched in versions 3.2.7 and 4.3.1.\n\n## Recommendation\n\nVersion 2.x.x: Update to version 2.6.9 or later.\nVersion 3.1.x: Update to version 3.1.0 or later.\nVersion 3.2.x: Update to version 3.2.7 or later.\nVersion 4.x.x: Update to version 4.3.1 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:34Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "url-parse"
+              },
+              "advisory": {
+                "description": "Versions of `url-parse` before 1.4.3 returns the wrong hostname which could lead to Open Redirect, Server Side Request Forgery (SSRF), or Bypass Authentication Protocol vulnerabilities.\n\n\n## Recommendation\n\nUpdate to version 1.4.3 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:35Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "bootstrap"
+              },
+              "advisory": {
+                "description": "In Bootstrap 4.x before 4.1.2, XSS is possible in the data-target property of scrollspy. This is similar to CVE-2018-14042."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:35Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "webpack-dev-server"
+              },
+              "advisory": {
+                "description": "Versions of `webpack-dev-server` before 3.1.10 are missing origin validation on the websocket server. This vulnerability allows a remote attacker to steal a developer's source code because the origin of requests to the websocket server that is used for Hot Module Replacement (HMR) are not validated.\n\n\n## Recommendation\nFor `webpack-dev-server` update to version 3.1.11 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:35Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "extend"
+              },
+              "advisory": {
+                "description": "Versions of `extend` prior to 3.0.2 (for 3.x) and 2.0.2 (for 2.x) are vulnerable to Prototype Pollution. The `extend()` function allows attackers to modify the prototype of Object causing the addition or modification of an existing property that will exist on all objects.\n\n\n\n\n## Recommendation\n\nIf you're using `extend` 3.x upgrade to 3.0.2 or later.\nIf you're using `extend` 2.x upgrade to 2.0.2 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:35Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "lodash"
+              },
+              "advisory": {
+                "description": "Versions of `lodash` before 4.17.11 are vulnerable to prototype pollution. \n\nThe vulnerable functions are 'defaultsDeep', 'merge', and 'mergeWith' which allow a malicious user to modify the prototype of `Object` via `{constructor: {prototype: {...}}}` causing the addition or modification of an existing property that will exist on all objects.\n\n\n\n\n## Recommendation\n\nUpdate to version 4.17.11 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:35Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "tar"
+              },
+              "advisory": {
+                "description": "Versions of `tar` prior to 4.4.2 for 4.x and 2.2.2 for 2.x are vulnerable to Arbitrary File Overwrite. Extracting tarballs containing a hardlink to a file that already exists in the system, and a file that matches the hardlink will overwrite the system's file with the contents of the extracted file.\n\n\n## Recommendation\n\nFor tar 4.x, upgrade to version 4.4.2 or later.\nFor tar 2.x, upgrade to version 2.2.2 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:35Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "tar"
+              },
+              "advisory": {
+                "description": "Versions of `tar` prior to 4.4.2 for 4.x and 2.2.2 for 2.x are vulnerable to Arbitrary File Overwrite. Extracting tarballs containing a hardlink to a file that already exists in the system, and a file that matches the hardlink will overwrite the system's file with the contents of the extracted file.\n\n\n## Recommendation\n\nFor tar 4.x, upgrade to version 4.4.2 or later.\nFor tar 2.x, upgrade to version 2.2.2 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:36Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "fstream"
+              },
+              "advisory": {
+                "description": "Versions of `fstream` prior to 1.0.12 are vulnerable to Arbitrary File Overwrite. Extracting tarballs containing a hardlink to a file that already exists in the system and a file that matches the hardlink will overwrite the system's file with the contents of the extracted file. The `fstream.DirWriter()` function is vulnerable.\n\n\n## Recommendation\n\nUpgrade to version 1.0.12 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:36Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "tunnel-agent"
+              },
+              "advisory": {
+                "description": "Versions of `tunnel-agent` before 0.6.0 are vulnerable to memory exposure.\n\nThis is exploitable if user supplied input is provided to the auth value and is a number.\n\nProof-of-concept:\n```js\nrequire('request')({\n  method: 'GET',\n  uri: 'http://www.example.com',\n  tunnel: true,\n  proxy:{\n    protocol: 'http:',\n    host:'127.0.0.1',\n    port:8080,\n    auth:USERSUPPLIEDINPUT // number\n  }\n});\n```\n\n\n## Recommendation\n\nUpdate to version 0.6.0 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:36Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "js-yaml"
+              },
+              "advisory": {
+                "description": "Versions of `js-yaml` prior to 3.13.1 are vulnerable to Code Injection. The `load()` function may execute arbitrary code injected through a malicious YAML file. Objects that have `toString` as key, JavaScript code as value and are used as explicit mapping keys allow attackers to execute the supplied code through the `load()` function. The `safeLoad()` function is unaffected.\n\nAn example payload is \n`{ toString: !<tag:yaml.org,2002:js/function> 'function (){return Date.now()}' } : 1` \nwhich returns the object \n{\n  \"1553107949161\": 1\n}\n\n\n## Recommendation\n\nUpgrade to version 3.13.1."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:36Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "js-yaml"
+              },
+              "advisory": {
+                "description": "Versions of `js-yaml` prior to 3.13.0 are vulnerable to Denial of Service. By parsing a carefully-crafted YAML file, the node process stalls and may exhaust system resources leading to a Denial of Service.\n\n\n## Recommendation\n\nUpgrade to version 3.13.0."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:36Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "braces"
+              },
+              "advisory": {
+                "description": "Versions of `braces` prior to 2.3.1 are vulnerable to Regular Expression Denial of Service (ReDoS). Untrusted input may cause catastrophic backtracking while matching regular expressions. This can cause the application to be unresponsive leading to Denial of Service.\n\n\n## Recommendation\n\nUpgrade to version 2.3.1 or higher."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:36Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "mem"
+              },
+              "advisory": {
+                "description": "Versions of `mem` prior to 4.0.0 are vulnerable to Denial of Service (DoS).  The package fails to remove old values from the cache even after a value passes its `maxAge` property. This may allow attackers to exhaust the system's memory if they are able to abuse the application logging.\n\n\n## Recommendation\n\nUpgrade to version 4.0.0 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:36Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "lodash"
+              },
+              "advisory": {
+                "description": "Versions of `lodash` before 4.17.12 are vulnerable to Prototype Pollution.  The function `defaultsDeep` allows a malicious user to modify the prototype of `Object` via `{constructor: {prototype: {...}}}` causing the addition or modification of an existing property that will exist on all objects.\n\n## Recommendation\n\nUpdate to version 4.17.12 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:37Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "handlebars"
+              },
+              "advisory": {
+                "description": "Versions of `handlebars` prior to 4.0.14 are vulnerable to Prototype Pollution. Templates may alter an Objects' prototype, thus allowing an attacker to execute arbitrary code on the server.\n\n\n## Recommendation\n\nFor handlebars 4.1.x upgrade to 4.1.2 or later.\nFor handlebars 4.0.x upgrade to 4.0.14 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:37Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "lodash"
+              },
+              "advisory": {
+                "description": "lodash prior to 4.7.11 is affected by: CWE-400: Uncontrolled Resource Consumption. The impact is: Denial of service. The component is: Date handler. The attack vector is: Attacker provides very long strings, which the library attempts to match using a regular expression. The fixed version is: 4.7.11."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:37Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "mixin-deep"
+              },
+              "advisory": {
+                "description": "Versions of `mixin-deep` prior to 2.0.1 or 1.3.2 are vulnerable to Prototype Pollution. The `mixinDeep` function fails to validate which Object properties it updates. This allows attackers to modify the prototype of Object, causing the addition or modification of an existing property on all objects.\n\n\n## Recommendation\n\nIf you are using `mixin-deep` 2.x, upgrade to version 2.0.1 or later.\nIf you are using `mixin-deep` 1.x, upgrade to version 1.3.2 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:37Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "set-value"
+              },
+              "advisory": {
+                "description": "Versions of `set-value` prior to 3.0.1 or 2.0.1 are vulnerable to Prototype Pollution. The `set` function fails to validate which Object properties it updates. This allows attackers to modify the prototype of Object, causing the addition or modification of an existing property on all objects.\n\n\n\n\n## Recommendation\n\nIf you are using `set-value` 3.x, upgrade to version 3.0.1 or later.\nIf you are using `set-value` 2.x, upgrade to version 2.0.1 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:37Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "serialize-javascript"
+              },
+              "advisory": {
+                "description": "Versions of `serialize-javascript` prior to 2.1.1 are vulnerable to Cross-Site Scripting (XSS). The package fails to sanitize serialized regular expressions. This vulnerability does not affect Node.js applications.\n\n\n## Recommendation\n\nUpgrade to version 2.1.1 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:37Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "ws"
+              },
+              "advisory": {
+                "description": "Affected versions of `ws` can crash when a specially crafted `Sec-WebSocket-Extensions` header containing `Object.prototype` property names as extension or parameter names is sent.\n\n## Proof of concept\n\n```\nconst WebSocket = require('ws');\nconst net = require('net');\n\nconst wss = new WebSocket.Server({ port: 3000 }, function () {\n  const payload = 'constructor';  // or ',;constructor'\n\n  const request = [\n    'GET / HTTP/1.1',\n    'Connection: Upgrade',\n    'Sec-WebSocket-Key: test',\n    'Sec-WebSocket-Version: 8',\n    `Sec-WebSocket-Extensions: ${payload}`,\n    'Upgrade: websocket',\n    '\\r\\n'\n  ].join('\\r\\n');\n\n  const socket = net.connect(3000, function () {\n    socket.resume();\n    socket.write(request);\n  });\n});\n```\n\n\n## Recommendation\n\nUpdate to version 3.3.1 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:38Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "kind-of"
+              },
+              "advisory": {
+                "description": "Versions of `kind-of` 6.x prior to 6.0.3 are vulnerable to a Validation Bypass. A maliciously crafted object can alter the result of the type check, allowing attackers to bypass the type checking validation. \n\n\n## Recommendation\n\nUpgrade to versions 6.0.3 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:38Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "minimist"
+              },
+              "advisory": {
+                "description": "Affected versions of `minimist` are vulnerable to prototype pollution. Arguments are not properly sanitized, allowing an attacker to modify the prototype of `Object`, causing the addition or modification of an existing property that will exist on all objects.  \nParsing the argument `--__proto__.y=Polluted` adds a `y` property with value `Polluted` to all objects. The argument `--__proto__=Polluted` raises and uncaught error and crashes the application.  \nThis is exploitable if attackers have control over the arguments being passed to `minimist`.\n\n\n## Recommendation\n\nUpgrade to versions 0.2.1, 1.2.3 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:38Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "minimist"
+              },
+              "advisory": {
+                "description": "Affected versions of `minimist` are vulnerable to prototype pollution. Arguments are not properly sanitized, allowing an attacker to modify the prototype of `Object`, causing the addition or modification of an existing property that will exist on all objects.  \nParsing the argument `--__proto__.y=Polluted` adds a `y` property with value `Polluted` to all objects. The argument `--__proto__=Polluted` raises and uncaught error and crashes the application.  \nThis is exploitable if attackers have control over the arguments being passed to `minimist`.\n\n\n## Recommendation\n\nUpgrade to versions 0.2.1, 1.2.3 or later."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:38Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "https-proxy-agent"
+              },
+              "advisory": {
+                "description": "Versions of `https-proxy-agent` prior to 2.2.3 are vulnerable to Machine-In-The-Middle. The package fails to enforce TLS on the socket if the proxy server responds the to the request with a HTTP status different than 200. This allows an attacker with access to the proxy server to intercept unencrypted communications, which may include sensitive information such as credentials.\n\n\n## Recommendation\n\nUpgrade to version 3.0.0 or 2.2.3."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:38Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "jquery"
+              },
+              "advisory": {
+                "description": "### Impact\nPassing HTML containing `<option>` elements from untrusted sources - even after sanitizing them - to one of jQuery's DOM manipulation methods (i.e. `.html()`, `.append()`, and others) may execute untrusted code.\n\n### Patches\nThis problem is patched in jQuery 3.5.0.\n\n### Workarounds\nTo workaround this issue without upgrading, use [DOMPurify](https://github.com/cure53/DOMPurify) with its `SAFE_FOR_JQUERY` option to sanitize the HTML string before passing it to a jQuery method.\n\n### References\nhttps://blog.jquery.com/2020/04/10/jquery-3-5-0-released/\n\n### For more information\nIf you have any questions or comments about this advisory, search for a relevant issue in [the jQuery repo](https://github.com/jquery/jquery/issues). If you don't find an answer, open a new issue."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:38Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "acorn"
+              },
+              "advisory": {
+                "description": "Affected versions of acorn are vulnerable to Regular Expression Denial of Service.\nA regex in the form of /[x-\\ud800]/u causes the parser to enter an infinite loop.\nThe string is not valid UTF16 which usually results in it being sanitized before reaching the parser.\nIf an application processes untrusted input and passes it directly to acorn,\nattackers may leverage the vulnerability leading to Denial of Service."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:38Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "websocket-extensions"
+              },
+              "advisory": {
+                "description": "### Impact\n\nThe ReDoS flaw allows an attacker to exhaust the server's capacity to process\nincoming requests by sending a WebSocket handshake request containing a header\nof the following form:\n\n    Sec-WebSocket-Extensions: a; b=\"\\c\\c\\c\\c\\c\\c\\c\\c\\c\\c ...\n\nThat is, a header containing an unclosed string parameter value whose content is\na repeating two-byte sequence of a backslash and some other character. The\nparser takes exponential time to reject this header as invalid, and this will\nblock the processing of any other work on the same thread. Thus if you are\nrunning a single-threaded server, such a request can render your service\ncompletely unavailable.\n\n### Patches\n\nUsers should upgrade to version 0.1.4.\n\n### Workarounds\n\nThere are no known work-arounds other than disabling any public-facing\nWebSocket functionality you are operating.\n\n### References\n\n- https://blog.jcoglan.com/2020/06/02/redos-vulnerability-in-websocket-extensions/"
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:39Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "elliptic"
+              },
+              "advisory": {
+                "description": "The Elliptic package before version 6.5.3 for Node.js allows ECDSA signature malleability via variations in encoding, leading '\\0' bytes, or integer overflows. This could conceivably have a security-relevant impact if an application relied on a single canonical signature."
+              }
+            }
+          },
+          {
+            "createdAt": "2023-04-25T09:47:39Z",
+            "dismissedAt": null,
+            "securityVulnerability": {
+              "package": {
+                "name": "serialize-javascript"
+              },
+              "advisory": {
+                "description": "serialize-javascript prior to 3.1.0 allows remote attackers to inject arbitrary code via the function \"deleteFunctions\" within \"index.js\". \n\nAn object such as `{\"foo\": /1\"/, \"bar\": \"a\\\"@__R-<UID>-0__@\"}` was serialized as `{\"foo\": /1\"/, \"bar\": \"a\\/1\"/}`, which allows an attacker to escape the `bar` key. This requires the attacker to control the values of both `foo` and `bar` and guess the value of `<UID>`. The UID has a keyspace of approximately 4 billion making it a realistic network attack."
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
